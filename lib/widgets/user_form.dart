@@ -3,10 +3,16 @@ import 'package:app_ifap/provider/users.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class UserForm extends StatelessWidget {
+class UserForm extends StatefulWidget {
   UserForm({Key? key}) : super(key: key);
 
+  @override
+  State<UserForm> createState() => _UserFormState();
+}
+
+class _UserFormState extends State<UserForm> {
   final _form = GlobalKey<FormState>();
+
   final Map<String, String> _formData = {};
 
   void _loadFormData(User? user) {
@@ -19,9 +25,14 @@ class UserForm extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     final user = ModalRoute.of(context)!.settings.arguments as User?;
     _loadFormData(user);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Formulário Ninja'),
